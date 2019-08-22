@@ -11,7 +11,6 @@ import {fetchTest} from '../servicos/main';
 import {Card, CardItem, Body, Text} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 export default class DetalheDoProfessor extends Component {
   static navigationOptions = {
     title: 'Detalhes',
@@ -21,13 +20,18 @@ export default class DetalheDoProfessor extends Component {
     const x = this.props.navigation.getParam('article');
     return (
       <Card>
-        <CardItem>
-          <View style={{width: '30%', marginTop: 9}}>
-            <Text style={{fontSize: 26}}>{x.horarioEntrada}</Text>
-            <Text style={{fontSize: 26}}>{x.horarioSaida}</Text>
+        <CardItem style={styles.curso}>
+          <View style={styles.nomeCurso}>
+            <Text style={styles.nomeCurso2}>{x.nome}</Text>
           </View>
-          <View>
-            <Text style={styles.nomeCurso}>{x.nome}</Text>
+        </CardItem>
+
+        <CardItem>
+          <View style={styles.horario}>
+            <Text style={styles.horarioEntrada}>{x.horarioEntrada}</Text>
+            <Text style={styles.horarioSaida}>{x.horarioSaida}</Text>
+          </View>
+          <View style={styles.informacoes}>
             <Text style={styles.nomeDisciplina}>{x.disciplina}</Text>
             <Text style={styles.semestre}>{x.semestre}° Semestre</Text>
             <Text style={styles.local}>
@@ -40,12 +44,13 @@ export default class DetalheDoProfessor extends Component {
           <View style={{marginTop: 9}}>
             <View>
               <Text style={styles.anotacao}>
-                <Icon name="exclamation-triangle" size={20} color="black" /> ANOTAÇÕES:
+                <Icon name="exclamation-triangle" size={20} color="black" />{' '}
+                ANOTAÇÕES:
               </Text>
             </View>
             <View>
               <Text style={styles.textoObservacao}>
-              {x.professores[0].anotacao}
+                {x.professores[0].anotacao}
               </Text>
             </View>
           </View>
@@ -61,7 +66,7 @@ export default class DetalheDoProfessor extends Component {
     const x = this.props.navigation.getParam('article');
     return (
       <ScrollView>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.imagenProfessor}>
           <View style={{width: '30%'}}>
             <Image
               source={require('../../assets/images/usuario_anonimo.jpg')}
@@ -71,8 +76,8 @@ export default class DetalheDoProfessor extends Component {
           <View style={{width: '60%', marginTop: 20, marginLeft: 20}}>
             <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
               Prof.
+              <Text style={styles.itemThreeTitle}>{x.professores[0].nome}</Text>
             </Text>
-            <Text style={styles.itemThreeTitle}>{x.professores[0].nome}</Text>
           </View>
         </View>
 
@@ -92,6 +97,11 @@ const styles = StyleSheet.create({
   nerdImage: {
     width: 120,
     height: 120,
+    borderRadius: 60,
+  },
+  imagenProfessor: {
+    alignItems: 'center',
+    marginTop: 15,
   },
   availableText: {
     color: 'white',
@@ -103,6 +113,7 @@ const styles = StyleSheet.create({
   itemThreeSubtitle: {
     fontSize: 12,
     color: '#a4a4a4',
+    paddingLeft: 30,
   },
   itemThreeTitle: {
     fontSize: 16,
@@ -112,17 +123,31 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginBottom: 20,
   },
-  nomeCurso: {
-    color: '#4700b3',
-  },
   nomeDisciplina: {
-    fontSize: 12,
+    fontFamily: 'Lato',
+    fontWeight: 'bold',
+  },
+  nomeCurso: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  nomeCurso2: {
+    fontSize: 15,
+    color: '#fff',
+    fontFamily: 'Lato',
+    textAlign: 'justify',
   },
   semestre: {
     fontSize: 12,
   },
   local: {
-    color: '#b380ff',
+    color: 'black',
+    backgroundColor: '#edcc0e',
+    borderRadius: 14,
+    padding: 5,
+    fontSize: 15,
+    fontWeight: 'bold',
   },
   cardObservacao: {
     marginTop: 10,
@@ -135,6 +160,33 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'justify',
   },
-  anotacao: {
+  horario: {
+    width: 90,
+    alignItems: 'center',
+    borderRightWidth: 1,
+    marginRight: 1,
+  },
+  horarioEntrada: {
+    fontSize: 18,
+    color: '#fff',
+    borderRadius: 14,
+    borderColor: 'black',
+    backgroundColor: 'rgb(72,160,220)',
+    padding: 6,
+    marginBottom: 2,
+  },
+  horarioSaida: {
+    fontSize: 18,
+    color: '#fff',
+    borderRadius: 14,
+    backgroundColor: 'rgb(74,164,92)',
+    padding: 6,
+  },
+  informacoes: {
+    marginLeft: 10,
+    textAlign: 'justify',
+  },
+  curso: {
+    backgroundColor: 'rgb(72,160,220)',
   },
 });

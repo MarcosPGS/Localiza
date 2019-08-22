@@ -54,7 +54,7 @@ export default class Login extends Component {
             </View>
             <Form>
               <Item floatingLabel>
-                <Label>Username</Label>
+                <Label>Usuário</Label>
                 <Input
                   value={username}
                   onChangeText={text => {
@@ -63,7 +63,7 @@ export default class Login extends Component {
                 />
               </Item>
               <Item floatingLabel last>
-                <Label>Password</Label>
+                <Label>Senha</Label>
                 <Input
                   value={password}
                   onChangeText={text => {

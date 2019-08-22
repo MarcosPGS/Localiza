@@ -53,15 +53,13 @@ export default class ListaDeProfessores extends Component {
             style={styles.itemThreeImage}
           />
           <View style={styles.itemThreeContent}>
-            <Text style={styles.itemThreeBrand}>{item.nome}</Text>
+            <Text style={styles.itemThreeBrand} numberOfLines={1}>
+              Prof. <Text style={styles.itemThreeBrand}>Nome Professor</Text>
+            </Text>
             <View>
-              <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
-                Prof.
-              </Text>
-              <Text style={styles.itemThreeTitle}>Nome Professor</Text>
-              <Text style={styles.itemThreeTitle}>
-                {item.semestre}° {item.disciplina}
-              </Text>
+              <Text style={styles.itemThreeSubtitle}>{item.nome}</Text>
+              <Text style={styles.itemThreeTitle}>{item.disciplina}</Text>
+              <Text style={styles.semestre}>{item.semestre}° Semestre</Text>
             </View>
             <View style={styles.itemThreePrice}>
               <Icon name="chevron-right" size={20} color="black" />
@@ -107,8 +105,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   itemThreeImage: {
-    height: 100,
-    width: 100,
+    height: 70,
+    width: 70,
+    borderRadius: 50,
   },
   itemThreeContent: {
     flex: 1,
@@ -140,5 +139,8 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#e3e3e3',
     marginRight: -15,
+  },
+  semestre: {
+    fontSize: 10,
   },
 });
