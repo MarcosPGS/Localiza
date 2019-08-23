@@ -34,9 +34,11 @@ export default class DetalheDoProfessor extends Component {
           <View style={styles.informacoes}>
             <Text style={styles.nomeDisciplina}>{x.disciplina}</Text>
             <Text style={styles.semestre}>{x.semestre}° Semestre</Text>
-            <Text style={styles.local}>
-              Bloco: {x.bloco} Sala: {x.sala}
-            </Text>
+            <View style={styles.local}>
+              <Text>
+                Bloco: {x.bloco} Sala: {x.sala}
+              </Text>
+            </View>
           </View>
         </CardItem>
 
@@ -185,6 +187,7 @@ const styles = StyleSheet.create({
   informacoes: {
     marginLeft: 10,
     textAlign: 'justify',
+    
   },
   curso: {
     backgroundColor: 'rgb(72,160,220)',

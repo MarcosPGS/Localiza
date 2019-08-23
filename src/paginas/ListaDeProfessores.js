@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   AsyncStorage,
   Button,
@@ -43,6 +43,10 @@ export default class ListaDeProfessores extends Component {
   };
 
   renderRowOne = ({item}) => {
+    const nomes = item.professores.reduce((value, current) => {
+      return `${value} ${current.nome}`;
+    }, '');
+
     return (
       <TouchableOpacity
         style={styles.itemThreeContainer}
@@ -54,7 +58,7 @@ export default class ListaDeProfessores extends Component {
           />
           <View style={styles.itemThreeContent}>
             <Text style={styles.itemThreeBrand} numberOfLines={1}>
-              Prof. <Text style={styles.itemThreeBrand}>Nome Professor</Text>
+              {`Prof. ${nomes}`}
             </Text>
             <View>
               <Text style={styles.itemThreeSubtitle}>{item.nome}</Text>
@@ -78,7 +82,7 @@ export default class ListaDeProfessores extends Component {
       <View style={styles.container}>
         <FlatList
           keyExtractor={(_, index) => `${index}`}
-          style={{backgroundColor: 'white', paddingHorizontal: 15}}
+          style={{ backgroundColor: 'white', paddingHorizontal: 15, flex: 1 }}
           data={this.state.cursos}
           renderItem={this.renderRowOne}
         />
