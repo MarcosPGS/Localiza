@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {fetchTest} from '../servicos/main';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {SearchBar} from 'react-native-elements';
 
 export default class ListaDeProfessores extends Component {
   static navigationOptions = {
@@ -23,12 +24,20 @@ export default class ListaDeProfessores extends Component {
       fontWeight: 'bold',
     },
   };
+  // state = {
+  //   search: '',
+  // };
 
+  updateSearch = search => {
+    // eslint-disable-next-line no-undef
+    this.setState({search: this.state});
+  };
   constructor(props) {
     super(props);
     this.state = {
       professores: [],
       disciplinas: [],
+      search: '',
     };
   }
   componentDidMount = async () => {
@@ -94,9 +103,15 @@ export default class ListaDeProfessores extends Component {
 
   render() {
     // console.warn(this.state.disciplina);
-
+    const search = this.state;
+    console.warn(search);
     return (
       <View style={styles.container}>
+        <SearchBar
+          placeholder="Nome Professor..."
+          onChangeText={this.updateSearch}
+          value={search}
+        />
         <FlatList
           keyExtractor={(_, index) => `${index}`}
           // eslint-disable-next-line react-native/no-inline-styles
