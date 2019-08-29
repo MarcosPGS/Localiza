@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, {Fragment, Component} from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -10,7 +10,7 @@ import {
 import {
   createStackNavigator,
   createSwitchNavigator,
-  createAppContainer
+  createAppContainer,
 } from 'react-navigation';
 import ListaDeProfessores from './src/paginas/ListaDeProfessores';
 import DetalheDoProfessor from './src/paginas/DetalheDoProfessor';
@@ -26,7 +26,7 @@ class AuthLoadingScreen extends Component {
     const userToken = await AsyncStorage.getItem('userToken');
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   };
-  
+
   render() {
     return (
       <View style={styles.container}>
@@ -45,17 +45,21 @@ const styles = StyleSheet.create({
   },
 });
 
+const AppStack = createStackNavigator({
+  ListaDeProfessores: ListaDeProfessores,
+  DetalheDoProfessor: DetalheDoProfessor,
+});
+const AuthStack = createStackNavigator({SignIn: ListaDeProfessores});
 
-const AppStack = createStackNavigator({ Home: ListaDeProfessores, Other: DetalheDoProfessor });
-const AuthStack = createStackNavigator({ SignIn: Login });
-
-export default createAppContainer(createSwitchNavigator(
-  {
-    AuthLoading: AuthLoadingScreen,
-    App: AppStack,
-    Auth: AuthStack,
-  },
-  {
-    initialRouteName: 'AuthLoading',
-  }
-));
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      AuthLoading: AuthLoadingScreen,
+      App: AppStack,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    },
+  ),
+);

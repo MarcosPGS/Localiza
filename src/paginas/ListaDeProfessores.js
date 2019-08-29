@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   AsyncStorage,
   Button,
@@ -15,38 +15,52 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class ListaDeProfessores extends Component {
   static navigationOptions = {
     title: 'Lista de Professores',
+    headerStyle: {
+      backgroundColor: 'rgb(72,160,220)',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      cursos: [],
       professores: [],
+      disciplinas: [],
     };
   }
   componentDidMount = async () => {
-    const cursos = await fetchTest();
+    const professores = await fetchTest();
     this.setState({
-      cursos: cursos.data,
+      professores: professores.data,
     });
   };
 
   keyExtractor = (item, index) => index.toString();
 
   _openArticle = article => {
-    this.props.navigation.navigate('Other', {
+    this.props.navigation.navigate('DetalheDoProfessor', {
       article,
-      abc: {
-        a: 10,
-      },
     });
   };
 
   renderRowOne = ({item}) => {
-    const nomes = item.professores.reduce((value, current) => {
+    const nomeDisicplina = item.disciplinas.reduce((value, current) => {
       return `${value} ${current.nome}`;
     }, '');
 
+    const semestre = item.disciplinas.reduce((value, current) => {
+      return `${value} ${current.semestre}`;
+    }, '');
+
+    const curso = item.disciplinas.reduce((value, current) => {
+      return `${value} ${current.curso}`;
+    }, '');
+    const turno = item.disciplinas.reduce((value, current) => {
+      return `${value} ${current.turno}`;
+    }, '');
     return (
       <TouchableOpacity
         style={styles.itemThreeContainer}
@@ -58,12 +72,15 @@ export default class ListaDeProfessores extends Component {
           />
           <View style={styles.itemThreeContent}>
             <Text style={styles.itemThreeBrand} numberOfLines={1}>
-              {`Prof. ${nomes}`}
+              {/* {`Prof. ${nomes}`} */}
+              {item.nome}
             </Text>
             <View>
-              <Text style={styles.itemThreeSubtitle}>{item.nome}</Text>
-              <Text style={styles.itemThreeTitle}>{item.disciplina}</Text>
-              <Text style={styles.semestre}>{item.semestre}° Semestre</Text>
+              <Text style={styles.itemThreeSubtitle}>{`${curso}`}</Text>
+              <Text style={styles.itemThreeTitle}>{`${nomeDisicplina}`}</Text>
+              <Text style={styles.semestre}>
+                {`${semestre}° Semestre - ${turno}`}
+              </Text>
             </View>
             <View style={styles.itemThreePrice}>
               <Icon name="chevron-right" size={20} color="black" />
@@ -76,14 +93,15 @@ export default class ListaDeProfessores extends Component {
   };
 
   render() {
-    // console.warn(this.state.professores);
+    // console.warn(this.state.disciplina);
 
     return (
       <View style={styles.container}>
         <FlatList
           keyExtractor={(_, index) => `${index}`}
-          style={{ backgroundColor: 'white', paddingHorizontal: 15, flex: 1 }}
-          data={this.state.cursos}
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{backgroundColor: 'white', paddingHorizontal: 15, flex: 1}}
+          data={this.state.professores}
           renderItem={this.renderRowOne}
         />
       </View>

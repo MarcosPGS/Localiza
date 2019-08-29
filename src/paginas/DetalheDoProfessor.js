@@ -14,29 +14,69 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class DetalheDoProfessor extends Component {
   static navigationOptions = {
     title: 'Detalhes',
+    headerStyle: {
+      backgroundColor: 'rgb(72,160,220)',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
   };
   keyExtractor = (item, index) => index.toString();
   renderItemGradeHoraria = ({item}) => {
-    const x = this.props.navigation.getParam('article');
+    const professor = this.props.navigation.getParam('article');
+    // console.warn(professor);
+    const nomeDisicplina = professor.disciplinas.reduce((value, current) => {
+      return `${value} ${current.nome}`;
+    }, '');
+    const semestre = professor.disciplinas.reduce((value, current) => {
+      return `${value} ${current.semestre}`;
+    }, '');
+
+    const horarioEntrada = professor.disciplinas.reduce((value, current) => {
+      return `${value} ${current.horarioEntrada}`;
+    }, '');
+
+    const horarioSaida = professor.disciplinas.reduce((value, current) => {
+      return `${value} ${current.horarioSaida}`;
+    }, '');
+
+    const curso = professor.disciplinas.reduce((value, current) => {
+      return `${value} ${current.curso}`;
+    }, '');
+
+    const diaSemana = professor.disciplinas.reduce((value, current) => {
+      return `${value} ${current.diaSemana}`;
+    }, '');
+
+    const bloco = professor.disciplinas.reduce((value, current) => {
+      return `${value} ${current.bloco}`;
+    }, '');
+
+    const sala = professor.disciplinas.reduce((value, current) => {
+      return `${value} ${current.sala}`;
+    }, '');
+
     return (
       <Card>
         <CardItem style={styles.curso}>
           <View style={styles.nomeCurso}>
-            <Text style={styles.nomeCurso2}>{x.nome}</Text>
+            <Text style={styles.nomeCurso2}>{`${curso}`}</Text>
           </View>
         </CardItem>
 
         <CardItem>
           <View style={styles.horario}>
-            <Text style={styles.horarioEntrada}>{x.horarioEntrada}</Text>
-            <Text style={styles.horarioSaida}>{x.horarioSaida}</Text>
+            <Text style={styles.horarioEntrada}>{`${horarioEntrada}`}</Text>
+            <Text style={styles.horarioSaida}>{`${horarioSaida}`}</Text>
           </View>
           <View style={styles.informacoes}>
-            <Text style={styles.nomeDisciplina}>{x.disciplina}</Text>
-            <Text style={styles.semestre}>{x.semestre}° Semestre</Text>
+            <Text style={styles.nomeDisciplina}>{`${nomeDisicplina}`}</Text>
+            <Text style={styles.semestre}>{`${semestre}° Semestre`}</Text>
+            <Text style={styles.semestre}>{`${diaSemana}`}</Text>
             <View style={styles.local}>
               <Text>
-                Bloco: {x.bloco} Sala: {x.sala}
+                {`Bloco:${bloco}`} {`Sala:${sala}`}
               </Text>
             </View>
           </View>
@@ -51,9 +91,7 @@ export default class DetalheDoProfessor extends Component {
               </Text>
             </View>
             <View>
-              <Text style={styles.textoObservacao}>
-                {x.professores[0].anotacao}
-              </Text>
+              <Text style={styles.textoObservacao}>{professor.anotacao}</Text>
             </View>
           </View>
         </CardItem>
@@ -65,7 +103,7 @@ export default class DetalheDoProfessor extends Component {
     this.props.navigation.navigate('Auth');
   };
   render() {
-    const x = this.props.navigation.getParam('article');
+    const professor = this.props.navigation.getParam('article');
     return (
       <ScrollView>
         <View style={styles.imagenProfessor}>
@@ -78,7 +116,7 @@ export default class DetalheDoProfessor extends Component {
           <View style={{width: '60%', marginTop: 20, marginLeft: 20}}>
             <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
               Prof.
-              <Text style={styles.itemThreeTitle}>{x.professores[0].nome}</Text>
+              <Text style={styles.itemThreeTitle}>{professor.nome}</Text>
             </Text>
           </View>
         </View>
@@ -187,7 +225,6 @@ const styles = StyleSheet.create({
   informacoes: {
     marginLeft: 10,
     textAlign: 'justify',
-    
   },
   curso: {
     backgroundColor: 'rgb(72,160,220)',
