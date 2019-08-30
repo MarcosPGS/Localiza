@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Text,
+  ActivityIndicator,
 } from 'react-native';
 import {fetchTest} from '../servicos/main';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -38,14 +39,47 @@ export default class ListaDeProfessores extends Component {
       professores: [],
       disciplinas: [],
       search: '',
+      isLoading: true,
     };
+    this.arrayholder = [];
   }
   componentDidMount = async () => {
     const professores = await fetchTest();
-    this.setState({
-      professores: professores.data,
-    });
+    this.setState(
+      {
+        isLoading: false,
+        professores: professores.data,
+      },
+      function() {
+        this.arrayholder = professores.data;
+      },
+    );
   };
+
+  search = text => {
+    console.warn(text);
+  };
+
+  clear = () => {
+    this.search.clear();
+  };
+
+  SearchFilterFunction(text) {
+    //passando o texto inserido em textInput
+    const newData = this.arrayholder.filter(function(item) {
+      //aplicando o filtro ao texto inserido na barra de pesquisa
+      const itemData = item.nome ? item.nome.toUpperCase() : ''.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+
+    this.setState({
+      //configurando o newData filtrando na fonte de dados
+      // depois de definir os dados, ele rederiza automaticamente novamente a exibiçao
+      professores: newData,
+      search: text,
+    });
+  }
 
   keyExtractor = (item, index) => index.toString();
 
@@ -82,7 +116,7 @@ export default class ListaDeProfessores extends Component {
           <View style={styles.itemThreeContent}>
             <Text style={styles.itemThreeBrand} numberOfLines={1}>
               {/* {`Prof. ${nomes}`} */}
-              {item.nome}
+              Prof. {item.nome}
             </Text>
             <View>
               <Text style={styles.itemThreeSubtitle}>{`${curso}`}</Text>
@@ -102,15 +136,24 @@ export default class ListaDeProfessores extends Component {
   };
 
   render() {
-    // console.warn(this.state.disciplina);
-    const search = this.state;
-    console.warn(search);
+    if (this.state.isLoading) {
+      return (
+        // eslint-disable-next-line react-native/no-inline-styles
+        <View style={{flex: 1, paddingTop: 20}}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <SearchBar
+          // round
+          lightTheme
+          searchIcon={{size: 24}}
+          onChangeText={text => this.SearchFilterFunction(text)}
+          onClear={text => this.SearchFilterFunction('')}
           placeholder="Nome Professor..."
-          onChangeText={this.updateSearch}
-          value={search}
+          value={this.state.search}
         />
         <FlatList
           keyExtractor={(_, index) => `${index}`}
