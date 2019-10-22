@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   AsyncStorage,
   View,
@@ -8,6 +8,7 @@ import {
   TextInput,
   Keyboard,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import {
   Container,
@@ -19,7 +20,7 @@ import {
   Input,
   Label,
 } from 'native-base';
-
+import { fetchTest } from '../servicos/main';
 const logo = require('../../assets/images/logo.png');
 
 export default class Login extends Component {
@@ -32,23 +33,67 @@ export default class Login extends Component {
     this.state = {
       username: '',
       password: '',
+      showMessage: false,
+      isLoading: false
     };
   }
 
   handleUsername = text => {
-    this.setState({username: text});
+    this.setState({ username: text });
   };
 
   handlePassword = text => {
-    this.setState({password: text});
+    this.setState({ password: text });
+  };
+
+  enableMessageError = () => {
+    this.setState({ showMessage: true });
+    setTimeout(() => this.setState({ showMessage: false }), 2000);
+  };
+
+  loginAction = async () => {
+    const { username, password } = this.state;
+
+    const professores = await fetchTest();
+    let professor = null;
+
+
+    for (let index = 0; index < professores.data.length; index++) {
+      const element = professores.data[index];
+      if (username === element.cpf && password === element.cpf) {
+        professor = element;
+      }
+    }
+
+    if (professor === null) {
+      this.enableMessageError();
+    } else {
+      this.props.navigation.navigate('ListaProfessorLogado', {
+        professor: professor,
+      });
+    }
   };
 
   render() {
-    const {username, password} = this.state;
+    const { username, password, showMessage } = this.state;
+    if (this.state.isLoading) {
+      return (
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <Content>
+            {showMessage && (
+              <View style={styles.bxMessage}>
+                <Text style={styles.textMessage}>
+                  Usuário ou senha inválido.
+                </Text>
+              </View>
+            )}
             <View style={styles.bxLogo}>
               <Image style={styles.stretch} source={logo} />
             </View>
@@ -66,20 +111,17 @@ export default class Login extends Component {
                 <Label>Senha</Label>
                 <Input
                   value={password}
+                  secureTextEntry={true}
                   onChangeText={text => {
                     this.handlePassword(text);
                   }}
                 />
               </Item>
-              <Button
-                block
-                info
+              <TouchableOpacity
                 style={styles.entrar}
-                onPress={this._signInAsync}>
-                <TouchableOpacity>
-                  <Text>ENTRAR</Text>
-                </TouchableOpacity>
-              </Button>
+                onPress={() => this.loginAction()}>
+                <Text style={styles.textButton}>ENTRAR</Text>
+              </TouchableOpacity>
             </Form>
           </Content>
         </View>
@@ -121,5 +163,26 @@ const styles = StyleSheet.create({
   entrar: {
     marginTop: 25,
     backgroundColor: 'rgb(102, 0, 255)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 8,
+  },
+  bxMessage: {
+    position: 'absolute',
+    top: 0,
+    height: 30,
+    width: '100%',
+    backgroundColor: 'rgba(255, 97, 97, 0.65)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textMessage: {
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  textButton: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });

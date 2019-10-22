@@ -11,28 +11,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {fetchTest} from '../servicos/main';
+// const fetchTest = require('../mock/lista_professor.json');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {SearchBar} from 'react-native-elements';
+let propsStatic = null;
 
 export default class ListaDeProfessores extends Component {
-  static navigationOptions = {
-    title: 'Lista de Professores',
-    headerStyle: {
-      backgroundColor: 'rgb(72,160,220)',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
-  // state = {
-  //   search: '',
-  // };
-
-  updateSearch = search => {
-    // eslint-disable-next-line no-undef
-    this.setState({search: this.state});
-  };
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +26,24 @@ export default class ListaDeProfessores extends Component {
       isLoading: true,
     };
     this.arrayholder = [];
+
+    propsStatic = props;
   }
+
+  componentDidMount = async () => {
+    const professores = await fetchTest;
+    console.error(professores);
+    this.setState(
+      {
+        isLoading: false,
+        professores: professores,
+      },
+      function() {
+        this.arrayholder = professores;
+      },
+    );
+  };
+
   componentDidMount = async () => {
     const professores = await fetchTest();
     this.setState(
@@ -54,6 +55,10 @@ export default class ListaDeProfessores extends Component {
         this.arrayholder = professores.data;
       },
     );
+  };
+  updateSearch = search => {
+    // eslint-disable-next-line no-undef
+    this.setState({search: this.state});
   };
 
   search = text => {
@@ -169,6 +174,25 @@ export default class ListaDeProfessores extends Component {
   _signOutAsync = async () => {
     await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
+  };
+
+  static navigationOptions = {
+    title: 'Lista de Professores',
+    headerStyle: {
+      backgroundColor: 'rgb(72,160,220)',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+    headerRight: (
+      <View style={{marginRight: 20}}>
+        <TouchableOpacity
+          onPress={() => propsStatic.navigation.navigate('Login')}>
+          <Icon name="sign-in" size={30} color="white" />
+        </TouchableOpacity>
+      </View>
+    ),
   };
 }
 

@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato-Thin',
     fontSize: 15,
     textAlign: 'justify',
+    fontWeight: 'bold',
   },
   horario: {
     width: 90,
@@ -228,5 +229,5 @@ const styles = StyleSheet.create({
   },
   curso: {
     backgroundColor: 'rgb(72,160,220)',
-  },
+  }
 });

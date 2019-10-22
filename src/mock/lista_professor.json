@@ -1,0 +1,128 @@
+[
+    {
+        "idProfessor": 6,
+        "nome": "Willian Ribeiro",
+        "cpf": "12365489701",
+        "anotacao": "Peguem o livro de Html EXtreme na Biblioteca",
+        "disciplinas": [
+            {
+                "idDisciplina": 7,
+                "nome": "Programação WEB",
+                "bloco": "E",
+                "sala": "LAB4",
+                "horarioEntrada": "19h00",
+                "horarioSaida": "22h00",
+                "curso": "Sistemas de Informação",
+                "diaSemana": "Segunda-Feira",
+                "turno": "NOTURNO",
+                "semestre": "1",
+                "idprofessor": 6
+            }
+        ]
+    },
+    {
+        "idProfessor": 8,
+        "nome": "Claudio Brasil",
+        "cpf": "98745632111",
+        "anotacao": "Prova adiada!",
+        "disciplinas": [
+            {
+                "idDisciplina": 9,
+                "nome": "Empreendedorismo",
+                "bloco": "E",
+                "sala": "37",
+                "horarioEntrada": "19h00",
+                "horarioSaida": "22h00",
+                "curso": "Sistemas de Informação",
+                "diaSemana": "Sexta-Feira",
+                "turno": "NOTURNO",
+                "semestre": "8",
+                "idprofessor": 8
+            }
+        ]
+    },
+    {
+        "idProfessor": 10,
+        "nome": "Sirlene",
+        "cpf": "04567894522",
+        "anotacao": "Apresentação seminario de Pedagogia",
+        "disciplinas": [
+            {
+                "idDisciplina": 11,
+                "nome": "Literatura",
+                "bloco": "B",
+                "sala": "5",
+                "horarioEntrada": "19h00",
+                "horarioSaida": "22h00",
+                "curso": "Pedagogia",
+                "diaSemana": "Quarta-Feira",
+                "turno": "NOTURNO",
+                "semestre": "2",
+                "idprofessor": 10
+            }
+        ]
+    },
+    {
+        "idProfessor": 12,
+        "nome": "Maria Eduarda",
+        "cpf": "03165485233",
+        "anotacao": "Aula de hoje será no Bloco: C Sala: 14",
+        "disciplinas": [
+            {
+                "idDisciplina": 13,
+                "nome": "Anatomia",
+                "bloco": "E",
+                "sala": "47",
+                "horarioEntrada": "19h00",
+                "horarioSaida": "22h00",
+                "curso": "Medicina Veterinaria",
+                "diaSemana": "Quinta-Feira",
+                "turno": "NOTURNO",
+                "semestre": "2",
+                "idprofessor": 12
+            }
+        ]
+    },
+    {
+        "idProfessor": 14,
+        "nome": "Wesley Queiroz",
+        "cpf": "45639871200",
+        "anotacao": "Prova hoje na sala 19 do bloco E",
+        "disciplinas": [
+            {
+                "idDisciplina": 15,
+                "nome": "Estrutura de Dados",
+                "bloco": "E",
+                "sala": "LAB6",
+                "horarioEntrada": "19h00",
+                "horarioSaida": "22h00",
+                "curso": "Sistemas de Informação",
+                "diaSemana": "Quinta-Feira",
+                "turno": "NOTURNO",
+                "semestre": "3",
+                "idprofessor": 14
+            }
+        ]
+    },
+    {
+        "idProfessor": 16,
+        "nome": "Anderson Costa",
+        "cpf": "65478925888",
+        "anotacao": "Leitura do Cap. 2 do livro Analise e desenvolvimento de Sistema",
+        "disciplinas": [
+            {
+                "idDisciplina": 17,
+                "nome": "ADS",
+                "bloco": "C",
+                "sala": "14",
+                "horarioEntrada": "19h00",
+                "horarioSaida": "22h00",
+                "curso": "Sistemas de Informação",
+                "diaSemana": "Terçca-Feira",
+                "turno": "NOTURNO",
+                "semestre": "3",
+                "idprofessor": 16
+            }
+        ]
+    }
+]
